@@ -10,8 +10,6 @@ nav:
   - Bot: bot.md
   - Web-Anwendung: web.md
   - API: api.md
-  - Betrieb: deployment.md
-  - Entwicklung: development.md
   - Troubleshooting: troubleshooting.md
 theme:
   name: readthedocs
