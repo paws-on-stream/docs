@@ -1,0 +1,19 @@
+site_name: Paws on Stream
+site_description: Projekt-Dokumentation für Bot und Web-Anwendung
+site_url: https://example.github.io/paws-on-stream-docs/
+repo_name: paws-on-stream-docs
+nav:
+  - Start: index.md
+  - Überblick: overview.md
+  - Architektur: architecture.md
+  - Datenmodell: data-model.md
+  - Bot: bot.md
+  - Web-Anwendung: web.md
+  - API: api.md
+  - Betrieb: deployment.md
+  - Entwicklung: development.md
+  - Troubleshooting: troubleshooting.md
+theme:
+  name: readthedocs
+plugins:
+  - search
