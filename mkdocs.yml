@@ -1,18 +1,36 @@
 site_name: Paws on Stream
-site_description: Projekt-Dokumentation für Bot, Web und Display
-site_url: https://example.github.io/paws-on-stream-docs/
+site_description: Handbuch und technische Dokumentation für Paws on Stream
 repo_name: paws-on-stream-docs
 nav:
   - Start: index.md
-  - Überblick: overview.md
-  - Architektur: architecture.md
-  - Datenmodell: data-model.md
-  - Bot: bot.md
-  - Display: display.md
-  - Web-Anwendung: web.md
-  - API: api.md
-  - Troubleshooting: troubleshooting.md
+  - Handbuch:
+      - Telegram-Bot verwenden: handbook/bot.md
+      - Rollen und Anmeldung: handbook/access.md
+      - Moderation: handbook/moderation.md
+      - Events und Einstellungen: handbook/events.md
+      - Regie und Displaysteuerung: handbook/control.md
+      - Passives Browser-Display: handbook/monitor.md
+  - Installation:
+      - Lokale Entwicklung: installation/local.md
+      - Produktionssystem: installation/production.md
+      - Raspberry-Pi-Display: installation/display.md
+  - Technische Referenz:
+      - Architektur: architecture.md
+      - Datenmodell: data-model.md
+      - Konfiguration: configuration.md
+      - Spamfilter: spam-filter.md
+      - HTTP-API: api.md
+      - Display-Themes: themes.md
+  - Betrieb:
+      - Runbook: operations/runbook.md
+      - Display-Betrieb und Wiederherstellung: operations/display.md
+      - Troubleshooting: troubleshooting.md
 theme:
   name: readthedocs
 plugins:
   - search
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+strict: true
