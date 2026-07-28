@@ -20,21 +20,21 @@ nicht `latest`. Private GHCR-Pakete benötigen ein `imagePullSecret`.
 
 1. PostgreSQL und ein persistentes Medien-Volume bereitstellen.
 2. Web-Secrets gemäß [Konfiguration](../configuration.md#web-backend) anlegen.
-3. Datenbank und Medienbestand sichern.
-4. Den Migrationsjob mit dem neuen Image ausführen und seinen Erfolg prüfen.
-5. Web-Deployment ausrollen.
-6. Sync- und Cleanup-CronJobs ausrollen.
-7. Health, Readiness und Metrics prüfen.
+3. Den Migrationsjob mit dem neuen Image ausführen und seinen Erfolg prüfen.
+4. Web-Deployment ausrollen.
+5. Sync- und Cleanup-CronJobs ausrollen.
+6. Health, Readiness und Metrics prüfen.
 
 ```bash
 curl -f https://<web-domain>/api/v1/health/
-curl -f https://<web-domain>/api/v1/readiness/
-curl -f https://<web-domain>/metrics/
 ```
 
-Das Medien-Volume und die Datenbank bilden einen gemeinsamen
-Wiederherstellungspunkt. Sie müssen zusammen gesichert und wiederhergestellt
-werden.
+Readiness und Metrics sind absichtlich nicht öffentlich erreichbar. Kubernetes
+prüft Readiness über den internen Service; Prometheus ruft Metrics ebenfalls
+intern ab. Der öffentliche Healthcheck bleibt für externe Verfügbarkeitschecks
+vorgesehen.
+
+Backup und Restore sind im aktuellen Projektumfang nicht vorgesehen.
 
 ## Bot ausrollen
 

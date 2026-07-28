@@ -7,17 +7,16 @@ und sämtliche Variablendefinitionen stehen bewusst nur unter
 
 ## Vor dem Event
 
-1. Aktuellen Backup- und Restore-Test bestätigen.
-2. Web, Bot und alle Displays auf erwartete unveränderliche Image-/Commit-Stände
+1. Web, Bot und alle Displays auf erwartete unveränderliche Image-/Commit-Stände
    bringen.
-3. Health, Readiness und Metriken aller Dienste prüfen.
-4. Reg- und Event-Sync kontrolliert ausführen.
-5. Event, Zeitraum, `allow_messages`, effektiven Display-Modus, Bot-Status,
+2. Health, Readiness und Metriken aller Dienste prüfen.
+3. Reg- und Event-Sync kontrolliert ausführen.
+4. Event, Zeitraum, `allow_messages`, effektiven Display-Modus, Bot-Status,
    Auto-Approve und Spam-Grenzwert prüfen.
-6. Jedes Display im Dashboard auf Aktivstatus und aktuellen Heartbeat prüfen.
-7. Testnachrichten für Text, Bild, GIF und Sticker senden, moderieren, anzeigen
+5. Jedes Display im Dashboard auf Aktivstatus und aktuellen Heartbeat prüfen.
+6. Testnachrichten für Text, Bild, GIF und Sticker senden, moderieren, anzeigen
    und im Display-Log bestätigen.
-8. Regieaktionen einschließlich Killswitch testen und wieder zurücksetzen.
+7. Regieaktionen einschließlich Killswitch testen und wieder zurücksetzen.
 
 ## Während des Events
 
@@ -31,12 +30,11 @@ und sämtliche Variablendefinitionen stehen bewusst nur unter
 ## Deployment
 
 1. Neues Image mit unveränderlichem Tag bereitstellen.
-2. Datenbank und Medien-Volume gemeinsam sichern.
-3. Migrationsjob mit dem neuen Tag ausführen.
-4. Erfolgreichen Job und Datenbankschema prüfen.
-5. Web ausrollen, dann Bot und CronJobs.
-6. Health, Readiness, Metrics, Login und API-Verbindungen prüfen.
-7. Displays einzeln aktualisieren und je Gerät eine Testnachricht bestätigen.
+2. Migrationsjob mit dem neuen Tag ausführen.
+3. Erfolgreichen Job und Datenbankschema prüfen.
+4. Web ausrollen, dann Bot und CronJobs.
+5. Health, Readiness, Metrics, Login und API-Verbindungen prüfen.
+6. Displays einzeln aktualisieren und je Gerät eine Testnachricht bestätigen.
 
 Nie mehrere risikoreiche Komponenten gleichzeitig aktualisieren, wenn dadurch
 kein funktionierender Nachrichtenpfad mehr zum Vergleich verfügbar wäre.
@@ -72,31 +70,25 @@ python paws_on_stream_web/manage.py cleanup_old_data --execute
 
 Der geplante Job entfernt standardmäßig Nachrichten nach 30 Tagen und danach
 nicht mehr referenzierte Medien nach sieben Tagen. Vor manueller Ausführung
-Vorschau, Backup und erwartete Mengen prüfen.
+Vorschau und erwartete Mengen prüfen.
 
 ## Backup und Restore
 
-- PostgreSQL mit `pg_dump` sichern.
-- Medien-PVC zum selben logischen Zeitpunkt sichern.
-- Backup-ID, Schema-/Image-Version und Zeitpunkt gemeinsam protokollieren.
-- Restore zuerst in einer separaten Datenbank und einem separaten Volume testen.
-- Nach dem Restore Medienabruf, Login, Participant-Beziehungen und Display-Logs
-  stichprobenartig prüfen.
+Backup und Restore sind im aktuellen Projektumfang nicht vorgesehen.
 
 ## Rollback
 
 1. Vorherige unveränderliche Image-Tags für Deployment und CronJobs einsetzen.
 2. Dienste neu ausrollen und Health prüfen.
 3. Migrationen nur rückwärts ausführen, wenn sie nachweislich reversibel sind.
-4. Bei inkompatiblen Schemaänderungen Datenbank und Medien-Volume gemeinsam aus
-   demselben Wiederherstellungspunkt restaurieren.
+4. Bei inkompatiblen Schemaänderungen keine Rückwärtsmigration erzwingen,
+   sondern eine vorwärtskompatible Korrektur bereitstellen.
 5. Bot-Retry-Queue erst wieder abarbeiten lassen, wenn das Backend konsistent ist.
 
 ## Nach dem Event
 
 1. `allow_messages` deaktivieren oder Bot-Status auf `offline` setzen.
 2. Displays kontrolliert leeren und stoppen, falls sie abgebaut werden.
-3. Abschlussbackup von Datenbank und Medien erstellen.
-4. Pending-, Retry- und Display-Ack-Rückstände dokumentieren.
-5. Logs und Metriken für die Nachbereitung sichern.
-6. Cleanup erst nach bestätigter Aufbewahrungsfrist ausführen.
+3. Pending-, Retry- und Display-Ack-Rückstände dokumentieren.
+4. Logs und Metriken für die Nachbereitung sichern.
+5. Cleanup erst nach bestätigter Aufbewahrungsfrist ausführen.

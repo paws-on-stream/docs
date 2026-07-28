@@ -1,7 +1,8 @@
 # HTTP-API
 
-Die zentrale API liegt unter `/api/v1/`. Mit Ausnahme von Health und Readiness
-ist der Header `X-API-Token` Pflicht.
+Die zentrale API liegt unter `/api/v1/`. Mit Ausnahme des öffentlichen
+Healthchecks ist der Header `X-API-Token` Pflicht oder der Zugriff bleibt auf
+das Cluster-Netz beschränkt.
 
 ## Tokens und Bereiche
 
@@ -19,8 +20,13 @@ JSON mit `400`, unbekannte Objekte mit `404` zurückgegeben.
 | Methode und Pfad | Auth | Zweck |
 | --- | --- | --- |
 | `GET /api/v1/health/` | öffentlich | Liveness und Datenbankstatus |
-| `GET /api/v1/readiness/` | öffentlich | Readiness und Datenbankstatus |
-| `GET /metrics/` | außerhalb `/api/` | Prometheus-Metriken |
+| `GET /api/v1/readiness/` | nur intern | Readiness und Datenbankstatus für Kubernetes |
+| `GET /metrics/` | nur intern | Prometheus-Metriken |
+
+`/api/v1/readiness/` und `/metrics/` werden am öffentlichen Ingress mit
+`403` gesperrt. Kubernetes-Probes und Prometheus greifen über den internen
+Service zu; für externe Verfügbarkeitsprüfungen ist `/api/v1/health/`
+vorgesehen.
 
 ## Bot-Vertrag
 
