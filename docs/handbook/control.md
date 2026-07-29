@@ -35,6 +35,42 @@ GET  /readiness
 persistiert und als Display-Event an das Backend nachgeliefert, sobald dieses
 erreichbar ist.
 
+## Bitfocus Companion
+
+In [Bitfocus Companion](https://bitfocus.io/companion) die Verbindung
+**Generic HTTP Requests** hinzufügen und für jede Funktion eine Taste mit einer
+HTTP-Request-Aktion anlegen:
+
+Als Basis-URL dient beispielsweise `http://display-ost:8765`. Jede Aktion
+verwendet den Header `X-Killswitch-Token` mit dem für dieses Display gesetzten
+`KILLSWITCH_TOKEN`; ein Request-Body ist nicht erforderlich.
+
+### Pause: `POST /api/pause`
+
+Hält die Verarbeitung neuer Inhalte an. Bereits sichtbarer Inhalt bleibt
+stehen. Die Taste eignet sich für eine kurze Unterbrechung der Ausgabe.
+
+### Weiter: `POST /api/resume`
+
+Setzt eine zuvor pausierte Ausgabe fort. Nach einem zurückgesetzten Killswitch
+wird dieser Endpunkt verwendet, um die normale Verarbeitung wieder zu starten.
+
+### Anzeige leeren: `POST /api/clear`
+
+Entfernt den sichtbaren Inhalt und leert den lokalen Nachrichten- und
+Mediencache. Neue freigegebene Inhalte können anschließend wieder angezeigt
+werden.
+
+### Killswitch: `POST /api/killswitch`
+
+Leert die Anzeige sofort und sperrt die weitere Ausgabe auf diesem Display. Die
+Sperre bleibt auch nach einem Neustart bestehen.
+
+### Killswitch zurücksetzen: `POST /api/killswitch/reset`
+
+Hebt die Killswitch-Sperre auf. Danach die Taste **Weiter** auslösen, damit das
+Display wieder neue Inhalte verarbeitet.
+
 ## Sicherer Ablauf bei problematischen Inhalten
 
 1. Killswitch für das betroffene Display auslösen.
